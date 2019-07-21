@@ -1,11 +1,3 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/node-apis/
- */
-
-// You can delete this file if you're not using it
-// import createFilePath from 'gatsby-source-filesystem';
 const path = require(`path`);
 
 exports.onCreateNode = ({ node, getNode }) => {
@@ -43,6 +35,7 @@ exports.createPages = ({ graphql, actions }) => {
     `
     ).then(result => {
         result.data.allWordpressPost.edges.forEach(({ node }) => {
+            console.log('the slug is: ', node.slug);
             createPage({
                 path: node.slug,
                 component: path.resolve(`./src/templates/blog-post.js`),

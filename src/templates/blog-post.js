@@ -1,9 +1,10 @@
 import React from "react"
-import {graphql} from 'gatsby'
 import Layout from "../components/layout"
+import {graphql} from 'gatsby'
 
-export default () => {
-  
+export default ({ data }) => {
+  const post = data.allWordpressPost.edges[0].node
+  console.log(post);
   return (
     <Layout>
       <div>
@@ -13,26 +14,15 @@ export default () => {
     </Layout>
   )
 }
-
 export const query = graphql`
-  allWordpressPost($id: String!) {
-    edges {
-        node {
-            title
-            excerpt
-            content
-            slug
+  query($slug: String!) {
+    allWordpressPost(filter: { slug: { eq: $slug } }) {
+			edges{
+        node{
+          title
+          content
         }
+      }
     }
-  }
-`
-
-export const pageQuery = graphql`
-  query($id: String!) {
-    wordpressPost(id: { eq: $id }) {
-      title
-      content
-      excerpt
-      slug
   }
 `
